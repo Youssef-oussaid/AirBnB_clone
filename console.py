@@ -4,6 +4,7 @@ import cmd
 import json
 import re
 import sys
+
 from models import *
 from models import storage
 
@@ -11,7 +12,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
 
-    def EOF(self, *args):
+    def do_EOF(self, *args):
         """usage: EOF
             Function: quits the cmdline
         """
