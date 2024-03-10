@@ -29,11 +29,11 @@ class HBNBCommand(cmd.Cmd):
         """Usage: create a new instance 
             of the class
         """
-        if line != "" or line is not None:
+        if line != "" or line is None:
             if line not in storage.classes()[line]():
                 print("** class doesn't exist **")
             else:
-                odj_instance = storage.classes()[line]()
+                obj_instance = storage.classes()[line]()
                 obj_instance.save()
                 print(obj_instance.id)
         else:
@@ -72,8 +72,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 class_name = line_args[0]
                 instance_id = line_args[1]
-                if class_name in classes.storage():
-                    key = f"{class_name}.{instance.id}"
+                if class_name in storage.classes():
+                    key = f"{class_name}.{instance_id}"
                     if key not in storage.all():
                         print("** no instance found **")
                     else:
