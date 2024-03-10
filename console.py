@@ -29,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
         """Usage: create a new instance 
             of the class
         """
-        if line != "" or line is None:
+        if line != "" or line is not None:
             if line not in storage.classes()[line]():
                 print("** class doesn't exist **")
             else:
