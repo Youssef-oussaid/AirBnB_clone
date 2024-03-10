@@ -89,7 +89,9 @@ class HBNBCommand(cmd.Cmd):
         """Usage: it prints the str representation
         of all instances stored.
         """
+        instance_obj = storage.all()
         instance_list = []
+
         if line == "" or line is None:
             for key in storage.all().items():
                 instance_list.append(str(value))
