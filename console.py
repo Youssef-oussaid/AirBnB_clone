@@ -26,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, line):
-        """Usage: create a new instance 
+        """Usage: create a new instance
             of the class
         """
         if line != "" or line is not None:
@@ -62,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
     def do_destroy(self, line):
-        """Deletes an instance with instance name 
+        """Deletes an instance with instance name
             and id and saves to json file
         """
         if line == "" or line is None:
@@ -107,9 +107,73 @@ class HBNBCommand(cmd.Cmd):
                         instance_list.append(str(value))
                     print(instance_list)
 
+    def do_update(self, line):
+        """Usage: it updates the attributes of
+        the class
+        """
+        checks = re.search(r"^(\w+)\s([\S]+?)\s({.+?})$", line)
+        if checks:
+            class_name = checks.group(1)
+            instance_id = checks.group(2)
+            update_dict = checks.group(3)
+
+            if class_name is None:
+                print("** class name missing **")
+            elif instance_id is None:
+                print("** instance id missing **")
+            elif update_dict is None:
+                print("** attribute name missing **")
+            else:
+                if class_name not in storage.classes():
+                    print("** class doesn't exist **")
+                else:
+                    key = f"{class_name}.{instance_id}"
+                    if key not in storage.all()[key]:
+                        print("** no instance found **")
+                    else:
+                        instance_dict = storage.all()[key]
+                        update_dict = json.loads(update_dict)
+
+                    attributes = storage.attributes()[class_name]
+                    for key, value in update_dict.items():
+                        if key in attributes:
+                            value = attributes[key](value)
+                            setattr(instance_dict, key, value)
+                            storage.save
+        else:
+            checks = re.search(
+                r"^(\w+)\s([\S]+?)\s\"(.+?)\"\,\s\"(.+?)\"", line)
+            class_name = checks.group(1)
+            instance_id = checks.group(2)
+            attribute = checks.group(3)
+            value = checks.group(4)
+
+            if class_name is None:
+                print("** class name missing **")
+            elif instance_id is None:
+                print("** instance id missing **")
+            elif attribute is None:
+                print("** attribute name missing **")
+            elif value is None:
+                print("** value missing **")
+            else:
+                if class_name not in storage.classes():
+                    print("** class doesn't exist **")
+                key = f"{class_name}.{instance_id}"
+                if key not in storage.all():
+                    print("** no instance found **")
+                else:
+                    instance_dict = storage.all()[key]
+                    attributes_dict = storage.attributes()[class_name]
+
+                    value = attributes_dict[attribute](
+                            value)
+                    setattr(instance_dict, attribute, value)
+                    storage.save()
 
     def emptyline(self):
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
