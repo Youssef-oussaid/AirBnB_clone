@@ -30,7 +30,7 @@ class HBNBCommand(cmd.Cmd):
             of the class
         """
         if line != "" or line is not None:
-            if line not in storage.classes()[line]():
+            if line not in storage.classes():
                 print("** class doesn't exist **")
             else:
                 obj_instance = storage.classes()[line]()
@@ -39,9 +39,11 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
-    def show(self, line):
+    def do_show(self, line):
+        """Shows the instance details of the class
+        """
         if line == "" or line is None:
-            print("** instance id missing **")
+            print("** class name missing **")
         else:
             line_args = line.split(" ")
             if len(line_args) < 2:
@@ -59,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** class doesn't exist **")
 
-    def destroy(self, line):
+    def do_destroy(self, line):
         """Deletes an instance with instance name 
             and id and saves to json file
         """
@@ -83,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** class doesn't exist **")
 
-    def all(self, line):
+    def do_all(self, line):
         """Usage: it prints the str representation
         of all instances stored.
         """
