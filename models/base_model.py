@@ -8,7 +8,7 @@ from models import storage
 class BaseModel():
     ''''Class from which all other classes will inherit'''
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         '''Initializes instance attributes'''
 
         if len(kwargs) == 0:
@@ -17,7 +17,7 @@ class BaseModel():
             self.updated_at = datetime.datetime.now()
             storage.new(self)
         else:
-            for key in kwargs.keys():
+            for key in kwargs:
                 # check and escape the __class__ key
                 if key == "__class__":
                     continue
@@ -33,8 +33,8 @@ class BaseModel():
 
     def __str__(self):
         '''Returns official string representation'''
-        return (f"[{self.__class__.__name__}] ({self.id}) \
-{str(self.__dict__)}")
+        return f"[{self.__class__.__name__}] ({self.id}) \
+{str(self.__dict__)}"
 
     def save(self):
         '''updates the public instance attribute updated_at'''
@@ -44,11 +44,11 @@ class BaseModel():
     def to_dict(self):
         '''returns a dictionary containing all keys/values of __dict__'''
         object_dict = {}
-        for key in self.__dict__.keys():
+        for key in self.__dict__.items():
             if key not in ('created_at', 'updated_at'):
                 object_dict[key] = self.__dict__[key]
             else:
                 object_dict[key] = datetime.datetime.isoformat(
                     self.__dict__[key])
         object_dict['__class__'] = self.__class__.__name__
-        return (object_dict)
+        return object_dict
