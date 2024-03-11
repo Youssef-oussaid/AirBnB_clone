@@ -61,6 +61,7 @@ class Test_Console(unittest.TestCase):
         result = f.getvalue()
         self.assertTrue(len(result) == 0)
         self.assertEqual("", result)
- 
+
+
 if __name__ == "__main__":
     unittest.main()
