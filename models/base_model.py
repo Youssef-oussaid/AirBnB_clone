@@ -38,7 +38,7 @@ class BaseModel():
     def to_dict(self):
         """returns a dict with k/v of __dict__"""
         object_dict = {}
-        for key in self.__dict__.items():
+        for key in self.__dict__.keys():
             if key not in ("created_at", "updated_at"):
                 object_dict[key] = self.__dict__[key]
             else:
